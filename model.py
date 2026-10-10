@@ -24,6 +24,7 @@ def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-
     pass
 
 # Step 2 - count_total_parameters
+import torch
 def count_total_parameters(model: torch.nn.Module):
     """Return the total number of parameters in `model` as a Python int."""
     # TODO: sum p.numel() over every parameter tensor in the module
@@ -33,8 +34,14 @@ def count_total_parameters(model: torch.nn.Module):
 # Step 3 - is_model_4bit_quantized (not yet solved)
 # TODO: implement
 
-# Step 4 - ensure_pad_token (not yet solved)
-# TODO: implement
+# Step 4 - ensure_pad_token
+def ensure_pad_token(tokenizer):
+    """Guarantee tokenizer.pad_token is not None; fall back to eos_token."""
+    # TODO: if the tokenizer is missing a pad token, reuse its eos token
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    return tokenizer
+    pass
 
 # Step 5 - get_lora_target_modules (not yet solved)
 # TODO: implement
